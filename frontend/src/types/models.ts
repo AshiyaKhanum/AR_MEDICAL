@@ -72,6 +72,7 @@ export interface Medicine {
   gstPercent: number;
   unit: string;
   minStockLevel: number;
+  rackNumber?: string | null;
   isActive: boolean;
   batches?: Batch[];
   totalStock?: number;

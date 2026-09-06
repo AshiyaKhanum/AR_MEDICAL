@@ -168,6 +168,7 @@ model Medicine {
   gstPercent       Decimal    @db.Decimal(5, 2) @default(0)
   unit             String     @default("STRIP") // STRIP, BOTTLE, TABLET, BOX, etc.
   minStockLevel    Int        @default(10)
+  rackNumber       String?    // Physical shelf/rack location in the store
   isActive         Boolean    @default(true)
   createdAt        DateTime   @default(now())
   updatedAt        DateTime   @updatedAt

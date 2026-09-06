@@ -103,6 +103,11 @@ export default function MedicineDetailPage() {
           <p className="text-xs text-slate-500">Minimum level: {medicine.minStockLevel}</p>
         </div>
         <div className="card p-4">
+          <p className="text-xs uppercase text-slate-400">Rack Number</p>
+          <p className="text-xl font-bold">{medicine.rackNumber || '-'}</p>
+          <p className="text-xs text-slate-500">Physical shelf location</p>
+        </div>
+        <div className="card p-4">
           <p className="text-xs uppercase text-slate-400">GST</p>
           <p className="text-xl font-bold">{Number(medicine.gstPercent)}%</p>
           <p className="text-xs text-slate-500">HSN: {medicine.hsnCode ?? '-'}</p>

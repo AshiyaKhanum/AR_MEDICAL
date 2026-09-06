@@ -4,17 +4,7 @@ import clsx from 'clsx';
 import {
   LayoutDashboard,
   Pill,
-  Layers,
   ScanBarcode,
-  Receipt,
-  ShoppingCart,
-  Truck,
-  Users,
-  Undo2,
-  Wallet,
-  FileBarChart,
-  History,
-  UserCog,
   Menu,
   X,
   LogOut,
@@ -33,20 +23,14 @@ interface NavItem {
   adminOnly?: boolean;
 }
 
+// Simplified navigation: staff only need to bill customers and manage inventory.
+// The other modules (Purchases, Suppliers, Customers, Returns, Payments, Reports,
+// Audit Logs, Users, standalone Invoices list, Batches & Expiry) still exist and
+// work if visited directly by URL - they're just not cluttering the sidebar.
 const NAV_ITEMS: NavItem[] = [
   { to: '/', label: 'Dashboard', icon: LayoutDashboard },
-  { to: '/medicines', label: 'Medicines', icon: Pill },
-  { to: '/batches', label: 'Batches & Expiry', icon: Layers },
   { to: '/pos', label: 'Billing / POS', icon: ScanBarcode },
-  { to: '/sales', label: 'Invoices', icon: Receipt },
-  { to: '/purchases', label: 'Purchases', icon: ShoppingCart },
-  { to: '/suppliers', label: 'Suppliers', icon: Truck },
-  { to: '/customers', label: 'Customers', icon: Users },
-  { to: '/returns', label: 'Returns', icon: Undo2 },
-  { to: '/payments', label: 'Payments', icon: Wallet },
-  { to: '/reports', label: 'Reports', icon: FileBarChart },
-  { to: '/audit-logs', label: 'Audit Logs', icon: History, adminOnly: true },
-  { to: '/users', label: 'Users', icon: UserCog, adminOnly: true },
+  { to: '/medicines', label: 'Medicines', icon: Pill },
 ];
 
 export default function AppLayout() {
@@ -81,7 +65,7 @@ export default function AppLayout() {
 
       <aside
         className={clsx(
-          'fixed inset-y-0 left-0 z-50 w-64 transform bg-brand-900 text-white transition-transform duration-200 lg:static lg:translate-x-0',
+          'fixed inset-y-0 left-0 z-50 w-64 transform bg-brand-900 text-white transition-transform duration-200 lg:translate-x-0',
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         )}
       >

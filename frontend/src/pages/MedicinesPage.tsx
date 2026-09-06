@@ -26,6 +26,7 @@ const schema = z.object({
   gstPercent: z.coerce.number().min(0).max(100),
   unit: z.string().min(1),
   minStockLevel: z.coerce.number().int().min(0),
+  rackNumber: z.string().optional(),
 });
 type FormValues = z.infer<typeof schema>;
 
@@ -54,7 +55,7 @@ export default function MedicinesPage() {
 
   const openCreate = () => {
     setEditing(null);
-    reset({ name: '', genericName: '', categoryId: '', manufacturerId: '', sku: '', barcode: '', hsnCode: '', gstPercent: 12, unit: 'STRIP', minStockLevel: 10 });
+    reset({ name: '', genericName: '', categoryId: '', manufacturerId: '', sku: '', barcode: '', hsnCode: '', gstPercent: 12, unit: 'STRIP', minStockLevel: 10, rackNumber: '' });
     setModalOpen(true);
   };
 
@@ -71,6 +72,7 @@ export default function MedicinesPage() {
       gstPercent: m.gstPercent,
       unit: m.unit,
       minStockLevel: m.minStockLevel,
+      rackNumber: m.rackNumber ?? '',
     });
     setModalOpen(true);
   };
@@ -81,6 +83,7 @@ export default function MedicinesPage() {
       categoryId: values.categoryId || null,
       manufacturerId: values.manufacturerId || null,
       barcode: values.barcode || null,
+      rackNumber: values.rackNumber || null,
     };
     const mutation = editing ? updateMedicine.mutateAsync({ id: editing.id, payload }) : createMedicine.mutateAsync(payload);
     mutation
@@ -127,6 +130,7 @@ export default function MedicinesPage() {
                 <th>Medicine</th>
                 <th>Category</th>
                 <th>SKU / Barcode</th>
+                <th>Rack</th>
                 <th>Stock</th>
                 <th>GST%</th>
                 <th>Nearest Expiry</th>
@@ -136,10 +140,10 @@ export default function MedicinesPage() {
             </thead>
             <tbody>
               {isLoading && (
-                <tr><td colSpan={8} className="py-8 text-center text-slate-400">Loading…</td></tr>
+                <tr><td colSpan={9} className="py-8 text-center text-slate-400">Loading…</td></tr>
               )}
               {!isLoading && rows.length === 0 && (
-                <tr><td colSpan={8} className="py-8 text-center text-slate-400">No medicines found</td></tr>
+                <tr><td colSpan={9} className="py-8 text-center text-slate-400">No medicines found</td></tr>
               )}
               {rows.map((m) => {
                 const expiryDays = m.nearestExpiry ? daysUntil(m.nearestExpiry) : null;
@@ -151,6 +155,13 @@ export default function MedicinesPage() {
                     </td>
                     <td>{m.category?.name ?? '-'}</td>
                     <td className="font-mono text-xs">{m.sku}{m.barcode ? ` / ${m.barcode}` : ''}</td>
+                    <td>
+                      {m.rackNumber ? (
+                        <span className="rounded bg-slate-100 px-2 py-0.5 font-mono text-xs font-semibold text-slate-700">{m.rackNumber}</span>
+                      ) : (
+                        <span className="text-xs text-slate-300">-</span>
+                      )}
+                    </td>
                     <td>
                       <span className={m.totalStock === 0 ? 'font-semibold text-red-600' : (m.totalStock ?? 0) <= m.minStockLevel ? 'font-semibold text-amber-600' : ''}>
                         {m.totalStock ?? 0} {m.unit}
@@ -266,6 +277,10 @@ export default function MedicinesPage() {
           <div>
             <label className="label">Minimum Stock Level</label>
             <input type="number" className="input" {...register('minStockLevel')} />
+          </div>
+          <div>
+            <label className="label">Rack Number</label>
+            <input className="input" placeholder="e.g. A1, R12" {...register('rackNumber')} />
           </div>
           <div className="col-span-full flex justify-end gap-2 pt-2">
             <button type="button" className="btn-secondary" onClick={() => setModalOpen(false)}>Cancel</button>

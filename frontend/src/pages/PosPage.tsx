@@ -172,7 +172,10 @@ export default function PosPage() {
                       if (batch) addToCart(m, batch);
                     }}
                   >
-                    <span>{m.name} <span className="text-xs text-slate-400">({m.genericName})</span></span>
+                    <span>
+                      {m.name} <span className="text-xs text-slate-400">({m.genericName})</span>
+                      {m.rackNumber && <span className="ml-2 rounded bg-slate-100 px-1.5 py-0.5 font-mono text-[10px] font-semibold text-slate-600">Rack {m.rackNumber}</span>}
+                    </span>
                     <span className={(m.totalStock ?? 0) === 0 ? 'text-xs text-red-500' : 'text-xs text-slate-500'}>{m.totalStock ?? 0} {m.unit}</span>
                   </button>
                 ))}

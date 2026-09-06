@@ -20,6 +20,7 @@ const medicineSchema = z.object({
   gstPercent: z.coerce.number().min(0).max(100).default(0),
   unit: z.string().default('STRIP'),
   minStockLevel: z.coerce.number().int().min(0).default(10),
+  rackNumber: z.string().optional().nullable(),
 });
 
 function withStock<T extends { batches: { quantity: number; expiryDate: Date }[] }>(m: T) {
@@ -46,6 +47,7 @@ router.get(
         { genericName: { contains: search, mode: 'insensitive' } },
         { sku: { contains: search, mode: 'insensitive' } },
         { barcode: { contains: search, mode: 'insensitive' } },
+        { rackNumber: { contains: search, mode: 'insensitive' } },
       ];
     }
     const medicines = await prisma.medicine.findMany({
