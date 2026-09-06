@@ -81,7 +81,7 @@ export default function AppLayout() {
 
       <aside
         className={clsx(
-          'fixed inset-y-0 left-0 z-50 w-64 transform bg-brand-900 text-white transition-transform duration-200 lg:static lg:translate-x-0',
+          'fixed inset-y-0 left-0 z-50 w-64 transform bg-brand-900 text-white transition-transform duration-200 lg:translate-x-0',
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         )}
       >
